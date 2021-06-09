@@ -1,31 +1,28 @@
 from bs4 import BeautifulSoup as bs
 import requests
 
-#dominio
 domain = 'http://www.ans.gov.br'
-#url inicial de acesso
-urlBase = 'http://www.ans.gov.br/prestadores/tiss-troca-de-informacao-de-saude-suplementar'
+url_base = 'http://www.ans.gov.br/prestadores/tiss-troca-de-informacao-de-saude-suplementar'
 
+def get_soup(url):
+    return bs(requests.get(url_base).text, 'html.parser') 
 
-soupAccess = bs(requests.get(urlBase).text, 'html.parser') 
+for url_get_access in get_soup(url_base).select_one(".alert-icolink"):
+    url_get_access = "http://www.ans.gov.br"+url_get_access['href']
+    print('Acessando o {}'.format(url_get_access))
 
-#buscando o link da página de download referente ao mais recente por classe css (.alert-icolink)
-for a in soupAccess.select_one(".alert-icolink"):
-    urlGetAccess = "http://www.ans.gov.br"+a['href']
-    print('Acessando o {}'.format(urlGetAccess))
+    def get_soup_download(url):
+        return bs(requests.get(url_get_access).text,'html.parser')
+     
+    for url_get_download in get_soup_download(url_get_access).select('a[href*=".pdf"]'):
+        url_get_download = 'http://www.ans.gov.br'+url_get_download['href']
+        print('Iniciando o download no link: {}'.format(url_get_download))
 
-soupGetDownload = bs(requests.get(urlGetAccess).text,'html.parser')
+    def downloadFile(url, address):
+        response = requests.get(url)
+        with open(address,'wb') as newFile:
+            newFile.write(response.content)
 
-#buscando o url do download para o pdf utilizando a marcação (a) e filtrando o link com final .pdf [href*=".pdf"]
-for urlGetDownload in soupGetDownload.select('a[href*=".pdf"]'):
-    urlGetDownload = 'http://www.ans.gov.br'+urlGetDownload['href']
-    print('Iniciando o download no link: {}'.format(urlGetDownload))
-
-#função para download do arquivo
-def downloadFile(url, address):
-    response = requests.get(url)
-    with open(address,'wb') as newFile:
-        newFile.write(response.content)
-    
-downloadFile(urlGetDownload, 'IntuitiveCare.pdf')
-print('Download concluido!')
+if __name__ == '__main__':     
+    downloadFile(url_get_download, './IntuitiveCare.pdf')
+    print('Download concluido!')
