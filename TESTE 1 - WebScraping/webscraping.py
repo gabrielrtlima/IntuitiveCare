@@ -24,5 +24,5 @@ for url_get_access in get_soup(url_base).select_one(".alert-icolink"):
             newFile.write(response.content)
 
 if __name__ == '__main__':     
-    downloadFile(url_get_download, './IntuitiveCare.pdf')
+    downloadFile(url_get_download, 'TESTE 1 - WebScraping\IntuitiveCare.pdf')
     print('Download concluido!')
