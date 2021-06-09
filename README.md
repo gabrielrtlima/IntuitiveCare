@@ -12,7 +12,7 @@ Neste teste o candidato deverá criar um código (em uma das linguagens menciona
 
 ### __Script__
 
-- Para executar o script precisa da biblioteca [BeautifulSoup4](https://pypi.org/project/beautifulsoup4/) e [Requests](https://pypi.org/project/requests/)
+- Para executar o script precisa das bibliotecas [BeautifulSoup4](https://pypi.org/project/beautifulsoup4/) e [Requests](https://pypi.org/project/requests/)
 - O script foi pensado exclusivamente para essa atividade, ou seja, mesmo ele buscando automaticamente ele funcionará apenas nesse template visto que as marcações para buscar o pdf mais utilizado foi usado atraves das classes css (.alert-icon) e elementos do html (a[href*=".pdf"])
 
 ```python
@@ -42,3 +42,5 @@ Neste teste o candidato deverá criar um código (em uma das linguagens menciona
 - Foi usado o [tabula](https://pypi.org/project/tabula-py/), que além da instalação dele (*pip install tabula-py*), requer o [Java 8+](https://www.java.com/pt-BR/download/ie_manual.jsp?locale=pt_BR), para visualizar a leitura do pdf através do tabula.
 
 - É um script bem simples de ser entendido, a única complexidade dele é entender como o tabula separa as tabelas, após isso só basta utilizar o for para automatizar as conversões.
+
+- Após a execução do script ele salvará todos os arquivos na pasta *TESTE 2 - Transformação de dados*, separado por nomes de cada tabela convertida.
